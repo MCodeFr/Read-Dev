@@ -1,0 +1,43 @@
+const ownerId = "735774672678944808";
+const prefix = "!";
+
+module.exports = {
+  name: "interactionCreate",
+  once: false,
+  async execute(client, interaction) {
+    let guildSettings = await client.getGuild(interaction.guild);
+
+    if (!guildSettings) {
+      await client.createdGuild(interaction.guild);
+      guildSettings = await client.getGuild(interaction.guild);
+    }
+
+    if (interaction.isCommand() || interaction.isContextMenu()) {
+      const cmd = client.commands.get(interaction.commandName);
+      if (!cmd) return interaction.reply(`Cette commande n'existe pas !`);
+
+      if (cmd.ownerOnly) {
+        if (interaction.user.id != ownerId);
+        return interaction.reply(
+          "Seul mon créateur peux exécuter cette commande !"
+        );
+      }
+
+      if (!interaction.member.permissions.has([cmd.permissions]))
+        return interaction.reply({
+          content: `Vous n'avez pas la / les permissions requises pour exécuter cette commande !`,
+          ephemeral: true,
+        });
+
+      cmd.runInteraction(client, interaction);
+    } else if (interaction.isButton()) {
+      const btn = client.buttons.get(interaction.customId);
+      if (!btn) return interaction.reply("Ce bouton n'existe pas !");
+      btn.runInteraction(client, interaction);
+    } else if (interaction.isSelectMenu()) {
+      const selectMenu = client.selects.get(interaction.customId);
+      if (!selectMenu) return interaction.reply("Ce menu n'existe pas !");
+      selectMenu.runInteraction(client, interaction, guildSettings);
+    }
+  },
+};
