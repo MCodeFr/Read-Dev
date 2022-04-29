@@ -26,4 +26,4 @@ Si ce template est sur github, c'est que vous pouvez le ré-utilisez. Simplement
 
 **_Remerciements_**
 
-(GetCodingKnowledge)[https://www.youtube.com/channel/UCUjo_IKa9Cqkx_x-rMly8MA] (le template à été créer par lui allez vous abonnez !)
+[GetCodingKnowledge](https://www.youtube.com/channel/UCUjo_IKa9Cqkx_x-rMly8MA) (le template à été créer par lui allez vous abonnez !)
